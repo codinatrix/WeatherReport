@@ -1,9 +1,10 @@
 
-## Project title
-Description.
 
-**Author**: Layla Alvey
-**Built with:** .NET Core
+## Weather Report
+A command line interface that display some interesting information about the weather in Sweden, based on SMHI's open API.
+
+* **Author**: Layla Alvey
+* **Built with:** .NET Core
 
 
 ## Instructions
@@ -12,6 +13,7 @@ Description.
 * Visual Studio
 * .Net 4.7
 
+**To run**: 
 1. Clone the repo
    ```sh
    git clone https://github.com/codinatrix/WeatherReport.git
@@ -38,6 +40,6 @@ Improvements that should be made to this app, in order of priority:
  - Create a Swagger.
 
 ## Contact
-[LinkedIn](https://www.linkedin.com/in/laylaalvey/)
-Project Link: [https://github.com/codinatrix/WeatherReport](https://github.com/codinatrix/WeatherReport)
+* [LinkedIn](https://www.linkedin.com/in/laylaalvey/)
+* Project Link: [https://github.com/codinatrix/WeatherReport](https://github.com/codinatrix/WeatherReport)
 
