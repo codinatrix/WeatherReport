@@ -149,14 +149,21 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PrecipitationController.cs" />
     <Compile Include="Controllers\TemperatureController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Integration\SMHI\Endpoints.cs" />
+    <Compile Include="Integration\SMHI\LatestMonthsPrecipitationResponse.cs" />
     <Compile Include="Integration\SMHI\SMHIGateway.cs" />
-    <Compile Include="Integration\SMHI\AverageTemperatureResponse.cs" />
+    <Compile Include="Integration\SMHI\LastHourTemperature.cs" />
+    <Compile Include="Models\AllStationsTemperature.cs" />
+    <Compile Include="Models\Precipitation.cs" />
+    <Compile Include="Models\Station.cs" />
+    <Compile Include="Services\PrecipitationService.cs" />
     <Compile Include="Services\TemperatureService.cs" />
-    <Compile Include="Models\TemperatureData.cs" />
+    <Compile Include="Models\AverageTemperature.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnityResolver.cs" />
   </ItemGroup>

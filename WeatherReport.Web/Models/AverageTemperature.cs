@@ -5,8 +5,8 @@ using System.Web;
 
 namespace WeatherReport.Web.Models
 {
-    public class TemperatureData
+    public class AverageTemperature
     {
-        public double AverageTemperature { get; set; }
+        public double Average { get; set; }
     }
 }

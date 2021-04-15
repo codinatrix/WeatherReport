@@ -7,11 +7,13 @@ using System.Web;
 using WeatherReport.Web.Integration.SMHI;
 using WeatherReport.Web.Models;
 
-namespace WeatherReport.Web
+namespace WeatherReport.Web.Services
 {
     public interface ITemperatureService
     {
-        Task<TemperatureData> GetAverageTemperatureForPastHourAsync();
+        Task<AverageTemperature> GetAverageTemperatureForPastHourAsync();
+        Task<AllStationsTemperature> GetTemperatureForEachStationAsync();
+
     }
 
     public class TemperatureService : ITemperatureService
@@ -23,20 +25,20 @@ namespace WeatherReport.Web
             _sMHIGateway = sMHIGateway;
         }
 
-        public async Task<TemperatureData> GetAverageTemperatureForPastHourAsync()
+        public async Task<AverageTemperature> GetAverageTemperatureForPastHourAsync()
         {
-            AverageTemperatureResponse temperatureReponse = await _sMHIGateway.GetTemperatureDataForThePastHourAsync();
+            LastHourTemperature temperatureReponse = await _sMHIGateway.GetTemperatureDataForThePastHourAsync();
 
             // We discard data for stations that are null
             // If SMHI has returned multiple values for a station, we grab the first one.
             // Unclear what it would mean if SMHI returned more than one value
-            List<Value> nonNullValueObjsForEachStation = temperatureReponse.station
+            List<LastHourTemperature.Value> nonNullValueObjsForEachStation = temperatureReponse.station
                 .Where(s => s.value != null)
                 .Select(s => s.value.FirstOrDefault()).ToList();
 
             // List contains one temperature for each station that had data
             List<string> temperatureForEachStation =  nonNullValueObjsForEachStation
-                .Where(v => !String.IsNullOrWhiteSpace(v.value))
+                .Where(v => !string.IsNullOrWhiteSpace(v.value))
                 .Select(v => v.value).ToList();
 
             List<double> allTemperaturesForSweden = new List<double>();
@@ -53,14 +55,48 @@ namespace WeatherReport.Web
             }
 
             if (!allTemperaturesForSweden.Any())
-                throw new ExternalException("SMHI did not return any data.");
+                throw new ExternalException("Failed to retrieve any data.");
 
-            TemperatureData temperatureData = new TemperatureData()
+            AverageTemperature temperatureData = new AverageTemperature()
             {
-                AverageTemperature = allTemperaturesForSweden.Average()
+                Average = allTemperaturesForSweden.Average()
             };
 
             return temperatureData;
+        }
+
+        public async Task<AllStationsTemperature> GetTemperatureForEachStationAsync()
+        {
+            LastHourTemperature temperatureReponse = await _sMHIGateway.GetTemperatureDataForThePastHourAsync();
+
+            AllStationsTemperature allStationsTemperature = new AllStationsTemperature()
+            {
+                Stations = new List<Station>()
+            };
+
+            foreach(LastHourTemperature.Station station in temperatureReponse.station)
+            {
+                
+                List<LastHourTemperature.Value> stationValueList = station.value;
+
+                // Discard null data
+                if (stationValueList == null || !stationValueList.Any())
+                    continue;
+
+                string temperatureAsStr = stationValueList.First().value;
+
+                double temperatureAsDouble;
+                if (!double.TryParse(temperatureAsStr, out temperatureAsDouble))
+                    continue;
+
+                allStationsTemperature.Stations.Add(new Station()
+                {
+                    Name = station.name,
+                    Temperature = temperatureAsDouble
+                });
+            }
+
+            return allStationsTemperature;
         }
     }
 }

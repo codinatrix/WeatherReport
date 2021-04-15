@@ -6,10 +6,11 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using WeatherReport.Web.Models;
+using WeatherReport.Web.Services;
 
 namespace WeatherReport.Web.Controllers
 {
-    [RoutePrefix("api/temperatures")]
+    [RoutePrefix("api/temperature")]
     public class TemperatureController : ApiController
     {
         ITemperatureService _temperatureService;
@@ -21,9 +22,18 @@ namespace WeatherReport.Web.Controllers
 
         [Route("average")]
         [HttpGet]
-        public async Task<TemperatureData> GetAsync()
+        public async Task<AverageTemperature> GetAverageTemperatureAsync()
         {
             return await _temperatureService.GetAverageTemperatureForPastHourAsync(); ;
         }
+
+        [Route("all")]
+        [HttpGet]
+        public async Task<AllStationsTemperature> GetAllTemperaturesAsynx()
+        {
+            return await _temperatureService.GetTemperatureForEachStationAsync(); ;
+        }
+
+        
     }
 }

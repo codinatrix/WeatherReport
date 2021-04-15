@@ -45,7 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Integration\WeatherService\TemperatureResponse.cs" />
+    <Compile Include="Integration\WeatherService\AllTemperatureResponse.cs" />
+    <Compile Include="Integration\WeatherService\AverageTemperatureResponse.cs" />
+    <Compile Include="Integration\WeatherService\Endpoints.cs" />
+    <Compile Include="Integration\WeatherService\PrecipitationResponse.cs" />
+    <Compile Include="Integration\WeatherService\StationResponse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

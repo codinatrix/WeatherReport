@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using Unity;
 using WeatherReport.Web.Integration.SMHI;
+using WeatherReport.Web.Services;
 
 namespace WeatherReport.Web
 {
@@ -34,6 +35,7 @@ namespace WeatherReport.Web
 
             container.RegisterType<ISMHIGateway, SMHIGateway>();
             container.RegisterType<ITemperatureService, TemperatureService>();
+            container.RegisterType<IPrecipitationService, PrecipitationService>();
         }
     }
 }
