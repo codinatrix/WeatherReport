@@ -1,10 +1,10 @@
 
 
 ## Weather Report
-A command line interface that display some interesting information about the weather in Sweden, based on SMHI's open API.
+A command line interface that displays some interesting information about the weather in Sweden, based on SMHI's open API.
 
 * **Author**: Layla Alvey
-* **Built with:** .NET Core
+* **Built with:** .NET 4.7
 
 
 ## Instructions
